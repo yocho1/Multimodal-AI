@@ -72,41 +72,33 @@ async def generate_embeddings(
 @router.post("/search", response_model=List[SearchResult])
 async def hybrid_search(
     background_tasks: BackgroundTasks,
-    query: SearchQuery
+    query_text: Optional[str] = Form(None),
+    query_image: Optional[UploadFile] = File(None),
+    top_k: int = Form(10)
 ):
     """Hybrid search using text and/or image"""
     try:
+        logger.info(f"Received search request: text={query_text}, top_k={top_k}")
+        
         image_path = None
-        # In real implementation, handle image_url/download
-        # For now, we'll use local file paths
+        if query_image:
+            # Save uploaded image temporarily
+            image_path = await save_upload_file(query_image)
+            # Schedule cleanup
+            background_tasks.add_task(lambda: os.remove(image_path) if os.path.exists(image_path) else None)
 
+        # Perform search
         results = await rag_service.hybrid_search(
-            query_text=query.query_text,
-            query_image_path=query.query_image_url,  # This would be a path
-            top_k=query.top_k
+            query_text=query_text,
+            query_image_path=image_path,
+            top_k=top_k
         )
 
+        logger.info(f"Search completed with {len(results)} results")
         return results
 
     except Exception as e:
         logger.error(f"Error in hybrid search: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.post("/rag", response_model=RAGResponse)
-async def multimodal_rag(request: RAGRequest):
-    """Multimodal RAG endpoint"""
-    try:
-        result = await rag_service.multimodal_rag(
-            query=request.query,
-            context_images=request.context_images,
-            hybrid_search=request.hybrid_search,
-            top_k=request.top_k
-        )
-
-        return RAGResponse(**result)
-
-    except Exception as e:
-        logger.error(f"Error in multimodal RAG: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/documents")
@@ -149,3 +141,17 @@ async def health_check():
         "service": "Multimodal AI Backend",
         "version": settings.VERSION
     }
+async def save_upload_file(upload_file: UploadFile) -> str:
+    """Save uploaded file and return path"""
+    import uuid
+    import aiofiles
+    
+    file_extension = upload_file.filename.split('.')[-1] if upload_file.filename else 'jpg'
+    filename = f"{uuid.uuid4()}.{file_extension}"
+    file_path = os.path.join(UPLOAD_DIR, filename)
+    
+    async with aiofiles.open(file_path, 'wb') as out_file:
+        content = await upload_file.read()
+        await out_file.write(content)
+    
+    return file_path
