@@ -1,21 +1,34 @@
-# 🎨 Multimodal AI Frontend
+# 🚀 Multimodal AI Fullstack Application
 
-A beautiful React + Tailwind CSS frontend for multimodal AI applications featuring embeddings generation, hybrid search, and RAG chat.
+A complete fullstack application for multimodal AI featuring image + text embeddings, hybrid search, and RAG capabilities. Built with modern technologies and professional architecture.
+
+![Multimodal AI](https://img.shields.io/badge/Multimodal-AI-blueviolet)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-green)
+![React](https://img.shields.io/badge/React-18-blue)
+![Python](https://img.shields.io/badge/Python-3.11-yellow)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 
 ## ✨ Features
 
-- **🧠 Embeddings Generator**: Create AI embeddings from text and images
-- **🔍 Hybrid Search**: Search using text, images, or both
-- **💬 AI Chat**: Multimodal RAG chat interface
-- **🎨 Beautiful UI**: Gradient designs with smooth animations
-- **📱 Responsive**: Works perfectly on all devices
-- **⚡ Modern Stack**: React, TypeScript, Tailwind CSS
+### 🧠 AI Capabilities
+- **Multimodal Embeddings**: Generate embeddings from both text and images
+- **Vision Transformers**: State-of-the-art image understanding with ViT models
+- **Sentence Transformers**: Advanced text embeddings
+- **Hybrid RAG**: Combined text + image retrieval augmented generation
+- **Vector Similarity Search**: Find similar content using cosine similarity
 
-## 🛠️ Tech Stack
+### 🎨 Frontend Features
+- **Beautiful UI**: Gradient designs with Tailwind CSS
+- **Three Main Interfaces**: Embeddings, Search, and RAG Chat
+- **Drag & Drop**: Easy file uploads with preview
+- **Real-time Updates**: Live search results and AI responses
+- **Responsive Design**: Works perfectly on all devices
+- **Type Safety**: Full TypeScript implementation
 
-- **Frontend**: React 18 + TypeScript
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **HTTP Client**: Axios
-- **File Upload**: React Dropzone
-- **Backend**: FastAPI (separate repo)
+### 🔧 Backend Features
+- **FastAPI**: Modern, fast web framework
+- **ChromaDB**: Vector database for efficient similarity search
+- **Professional Architecture**: Clean service-based architecture
+- **Comprehensive API**: RESTful endpoints with OpenAPI documentation
+- **Error Handling**: Robust error handling and logging
+"
