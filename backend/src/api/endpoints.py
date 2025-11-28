@@ -28,7 +28,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 async def save_upload_file(upload_file: UploadFile) -> str:
     """Save uploaded file and return path"""
-    file_extension = upload_file.filename.split('.')[-1]
+    file_extension = upload_file.filename.split('.')[-1] if upload_file.filename else 'jpg'
     filename = f"{uuid.uuid4()}.{file_extension}"
     file_path = os.path.join(UPLOAD_DIR, filename)
     
@@ -133,6 +133,25 @@ async def add_document(
         logger.error(f"Error adding document: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.post("/rag", response_model=RAGResponse)
+async def multimodal_rag(request: RAGRequest):
+    """Multimodal RAG endpoint"""
+    try:
+        logger.info(f"Received RAG request: {request.query}")
+        
+        result = await rag_service.multimodal_rag(
+            query=request.query,
+            context_images=request.context_images,
+            hybrid_search=request.hybrid_search,
+            top_k=request.top_k
+        )
+
+        return RAGResponse(**result)
+
+    except Exception as e:
+        logger.error(f"Error in multimodal RAG: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/health")
 async def health_check():
     """Health check endpoint"""
@@ -141,17 +160,3 @@ async def health_check():
         "service": "Multimodal AI Backend",
         "version": settings.VERSION
     }
-async def save_upload_file(upload_file: UploadFile) -> str:
-    """Save uploaded file and return path"""
-    import uuid
-    import aiofiles
-    
-    file_extension = upload_file.filename.split('.')[-1] if upload_file.filename else 'jpg'
-    filename = f"{uuid.uuid4()}.{file_extension}"
-    file_path = os.path.join(UPLOAD_DIR, filename)
-    
-    async with aiofiles.open(file_path, 'wb') as out_file:
-        content = await upload_file.read()
-        await out_file.write(content)
-    
-    return file_path

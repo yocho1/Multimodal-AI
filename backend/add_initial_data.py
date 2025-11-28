@@ -3,32 +3,36 @@ import json
 
 BASE_URL = "http://localhost:8000/api/v1"
 
-# Sample data about babies and kids
+# More comprehensive sample data
 sample_data = [
     {
-        "content": "A beautiful baby smiling happily with bright eyes and chubby cheeks. The baby is wearing a cute onesie and playing with soft toys in a well-lit nursery room with pastel colors.",
+        "content": "Multimodal AI systems can process and understand multiple types of data including text, images, audio, and video. This allows for more comprehensive artificial intelligence applications that can understand context across different media formats.",
         "media_type": "text"
     },
     {
-        "content": "Happy toddler playing in the park with a red ball. The child is laughing and running on green grass under sunny skies with trees in the background.",
+        "content": "Achraf is a common name in several cultures. In a technical context, AI systems like this one can process information about people and topics but don't retain personal data between sessions for privacy and security reasons.",
         "media_type": "text"
     },
     {
-        "content": "Newborn baby sleeping peacefully wrapped in a soft blanket. The infant has delicate features and is resting in a cozy crib with gentle lighting.",
+        "content": "RAG (Retrieval Augmented Generation) enhances AI responses by first searching a knowledge base for relevant information, then using that context to generate more accurate and informed answers. This combines the benefits of search systems with generative AI.",
         "media_type": "text"
     },
     {
-        "content": "Multimodal AI can understand both images of babies and text descriptions of children's activities. This allows for comprehensive understanding of child-related content across different media types.",
+        "content": "Vector databases like ChromaDB store numerical representations of content called embeddings. These embeddings capture semantic meaning, allowing the system to find similar content even if the exact words don't match.",
         "media_type": "text"
     },
     {
-        "content": "Baby's first steps - a moment of joy and celebration as the infant learns to walk while holding onto furniture for support in a safe home environment.",
+        "content": "Shopusia appears to be an e-commerce or shopping related term. In multimodal AI systems, product images and descriptions can be processed together to provide better search and recommendation capabilities for shopping platforms.",
+        "media_type": "text"
+    },
+    {
+        "content": "Baby and children content is commonly processed by AI systems for applications in education, entertainment, and family services. Computer vision can identify objects in images while natural language processing understands textual descriptions.",
         "media_type": "text"
     }
 ]
 
-def add_sample_data():
-    print(" Adding sample baby-related data to your search database...")
+def add_better_data():
+    print(" Adding comprehensive sample data to improve search quality...")
     
     for i, item in enumerate(sample_data, 1):
         try:
@@ -49,5 +53,5 @@ def add_sample_data():
             print(f" Error adding document {i}: {e}")
 
 if __name__ == "__main__":
-    add_sample_data()
-    print("\n Sample data added! Now try searching for 'baby' or 'toddler'")
+    add_better_data()
+    print("\n Better sample data added! Now try asking questions about multimodal AI, RAG, or Achraf")
